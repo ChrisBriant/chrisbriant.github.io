@@ -34,6 +34,9 @@
 							//$('#cardarea').append("<div class='row test'>");
 						}
 
+						//Get the branches
+						//data[i].branches_url
+
 						var updated_at = new Date(data[i].updated_at)
 
 						cardareahtml += $('#cardtemplate').html().replace(/__title__/g, data[i].name)
@@ -96,6 +99,11 @@
 							</ul>
 					</div>
 				</div>
+				<header class="major">
+					<div>
+						<h2>My GitHub</h2>
+					</div>
+				</header>
 				<div id="cardtemplate" style="display:none;">
 					<div class="card" style="width: 18rem;">
 					  <div class="card-body">
