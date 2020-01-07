@@ -1,3 +1,15 @@
 .unbulleted ul li {
     list-style-type: none;
 }
+
+/*
+.container div {
+  text-align: left;
+}*/
+
+.blogitem {
+  border-radius: 25px;
+  background: #73AD21;
+  padding: 20px;
+  text-align: left;
+}
