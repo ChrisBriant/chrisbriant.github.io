@@ -19,6 +19,13 @@
 	</head>
 	<script>
 	  $(document).ready(function() {
+
+			function formatDate(datestr) {
+			  var date = new Date(datestr);
+
+			  return date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
+			}
+
 			$.ajax({
 				type: "get",
 				url: "https://api.github.com/users/ChrisBriant/repos",
@@ -65,14 +72,25 @@
 					var innerhtml = "";
 
 					for(var i=0;i < data.length;i++) {
+						/*
 						innerhtml += "<div class='row blogitem'>"
 						//innerhtml += "<div class='blogitem'>"
 						innerhtml += "<div class='col-md-2'><p>" + data[i].title + "</p></div>";
-						innerhtml += "<div class='col-md-2'><p>" + data[i].author + "</p></div>";
-						innerhtml += "<div class='col-md-4'><p>" + data[i].body + "</p></div>";
-						innerhtml += "<div class='col-md-4'><p>" + data[i].date + "</p></div>";
+						innerhtml += "<div class='col-md-2'><p>by" + data[i].author + "</p></div>";
+						innerhtml += "<div class='col-md-4'><p>on" + data[i].date + "</p></div>";
 						//innerhtml += "</div>";
 						innerhtml += "</div><br/>";
+						innerhtml += "<div class='row blogitem'>"
+						innerhtml += "<div class='col-md-12'><p>" + data[i].body + "</p></div>";
+						innerhtml += "</div><br/>";
+						*/
+
+						innerhtml += "<div class='card'>";
+						innerhtml += "<div class='card-body'>";
+						innerhtml += 	"<h5 class='card-title'><strong>" + data[i].title + "</strong></h5>";
+						innerhtml += 	"<h5 class='card-title'>by " + data[i].author + " on " + formatDate(data[i].date) + "</h5>";
+						innerhtml +=  "<p class='card-text'><strong>"+  data[i].body + "</strong></p>";
+						innerhtml += "</div></div><br/>";
 					}
 
 					$('#blogarea').html(innerhtml);
@@ -159,6 +177,10 @@
 				<div id="blogarea" class="container-fluid">
 				</div>
 
+				<header class="major">
+					<h2>Add a New Blog Entry</h2>
+				</header>
+
 				<form method="post" action="" id="blogpost">
 					<label>Title:</label>
 					<input id="title" type="text"></input>
@@ -166,7 +188,8 @@
 					<input id="author" type="text"></input>
 					<label>Text:</label>
 					<textarea id="blogtext"></textarea>
-					<input type="submit" class="btn btn-primary" />
+					<br/>
+					<input type="submit" class="btn btn-primary" value="Add" />
 				</form>
 
 			</section>
