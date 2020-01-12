@@ -30,19 +30,13 @@
 				type: "get",
 				url: "https://api.github.com/users/ChrisBriant/repos",
 				success: function(data) {
-					//update_messages(data.messages);
 					console.log(data);
-					//data = JSON.parse(data);
 					var cardareahtml = "";
 
 					for(var i=0;i < data.length;i++) {
 						if(i % 3 == 0) {
 							cardareahtml += "<div class='row test'>";
-							//$('#cardarea').append("<div class='row test'>");
 						}
-
-						//Get the branches
-						//data[i].branches_url
 
 						var updated_at = new Date(data[i].updated_at)
 
@@ -50,11 +44,9 @@
 						.replace(/__defaultbranch__/g, data[i].default_branch)
 						.replace(/__lastcommit__/g, updated_at)
 						.replace(/__htmlurl__/g, data[i].html_url);
-						//$('#cardarea').append($('#cardtemplate').html().replace(/__title__/g, data[i].name));
 
 						if(i % 3 == 2 || i == (data.length - 1)) {
 							cardareahtml += "</div>";
-							//$('#cardarea').append("</div>");
 						}
 					}
 					$('#cardarea').append(cardareahtml);
@@ -72,41 +64,59 @@
 					var innerhtml = "";
 
 					for(var i=0;i < data.length;i++) {
-						/*
-						innerhtml += "<div class='row blogitem'>"
-						//innerhtml += "<div class='blogitem'>"
-						innerhtml += "<div class='col-md-2'><p>" + data[i].title + "</p></div>";
-						innerhtml += "<div class='col-md-2'><p>by" + data[i].author + "</p></div>";
-						innerhtml += "<div class='col-md-4'><p>on" + data[i].date + "</p></div>";
-						//innerhtml += "</div>";
-						innerhtml += "</div><br/>";
-						innerhtml += "<div class='row blogitem'>"
-						innerhtml += "<div class='col-md-12'><p>" + data[i].body + "</p></div>";
-						innerhtml += "</div><br/>";
-						*/
-
 						innerhtml += "<div class='card'>";
 						innerhtml += "<div class='card-body'>";
 						innerhtml += 	"<h5 class='card-title'><strong>" + data[i].title + "</strong></h5>";
 						innerhtml += 	"<h5 class='card-title'>by " + data[i].author + " on " + formatDate(data[i].date) + "</h5>";
 						innerhtml +=  "<p class='card-text'><strong>"+  data[i].body + "</strong></p>";
+						innerhtml += "<button id='" + data[i]._id +"' class='btn btn-primary blogbtn'>Delete</button>"
 						innerhtml += "</div></div><br/>";
 					}
 
 					$('#blogarea').html(innerhtml);
+					$(".blogbtn").on('click',function(event) {
+						var deleteid = $(this).attr("id");
+
+						$.ajax({
+							type: "get",
+							url: "https://aqueous-meadow-55873.herokuapp.com/deleteblog/"+deleteid,
+							success: function(data) {
+								console.log("Deleted Blog");
+								console.log(data);
+								location.reload();
+							}
+						});
+
+					});
 
 				}
 			});
 
-			$("#blogpost").submit(function(event){
+
+			$("#blogpost").on('submit',function(event){
 					event.preventDefault(); //prevent default action
 
-					var title = $('#title').val();
-					var author = $('#author').val();
-					var blogtext = $('#blogtext').val();
+					var blogdata = {
+						title:$('#title').val(),
+						author:$('#author').val(),
+						body:$('#blogtext').val()
+					}
 
-					alert(title);
-			});
+					$.ajax({
+						type: "post",
+						url: "https://aqueous-meadow-55873.herokuapp.com/posts",
+						dataType: 'json',
+						contentType: 'application/json',
+						data: JSON.stringify(blogdata),
+						success: function(data) {
+							//update_messages(data.messages);
+							console.log("blog data");
+							console.log(data);
+							alert("Your blog entry has been added successfully");
+							location.reload();
+						}
+					});
+				});
 		});
 	</script>
 	<body>
