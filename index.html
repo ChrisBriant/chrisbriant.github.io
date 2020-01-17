@@ -43,15 +43,53 @@
 						cardareahtml += $('#cardtemplate').html().replace(/__title__/g, data[i].name)
 						.replace(/__defaultbranch__/g, data[i].default_branch)
 						.replace(/__lastcommit__/g, updated_at)
-						.replace(/__htmlurl__/g, data[i].html_url);
+						.replace(/__htmlurl__/g, data[i].html_url)
+						.replace(/__selectid__/g, data[i].id)
+						.replace(/__branchurl__/g, data[i].branches_url.replace("{/branch}",""));
 
 						if(i % 3 == 2 || i == (data.length - 1)) {
 							cardareahtml += "</div>";
 						}
 					}
 					$('#cardarea').append(cardareahtml);
+					$('.selbranches').on('change',function() {
+						var select = $(this);
+
+						$.ajax({
+							type: "get",
+							url: $(this).val(),
+							success: function(data) {
+								//Loop backwards to get branches
+								console.log(data);
+								//Get the element which is the paragraph underneath the select
+								select.parent().next().html("<strong>Last Commit: </strong>" + new Date(data.commit.author.date));
+								//select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
+							}
+						});
+					});
+					$('.selbranches').each(function() {
+						if($(this).attr("branchurl") !== "__branchurl__") {
+							var select = $(this);
+							$.ajax({
+								type: "get",
+								url: $(this).attr("branchurl"),
+								success: function(data) {
+									//Loop backwards to get branches
+									for(var i=data.length - 1;i > -1; i--) {
+										console.log(data);
+										select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
+									}
+								}
+							});
+						}
+					});
+
+
 				}
 			});
+
+
+
 
 			$.ajax({
 				type: "get",
@@ -131,6 +169,7 @@
 		<!-- One -->
 			<section id="one" class="wrapper special" style="padding-top:20px">
 				<div class="inner">
+					<a href="#github">GitHub Repos</a> | <a href="#blogs">Blogs</a> | <a href="#addblog">Add Blog</a>
 					<header class="major">
 						<h2>About Me</h2>
 					</header>
@@ -161,17 +200,20 @@
 							</ul>
 					</div>
 				</div>
+				<a name="github">
 				<header class="major">
 					<div>
 						<h2>My GitHub</h2>
 					</div>
 				</header>
 				<div id="cardtemplate" style="display:none;">
-					<div class="card" style="width: 18rem;">
+					<div class="card" style="width: 18rem;margin-bottom:10px;">
 					  <div class="card-body">
 					    <h5 class="card-title">__title__</h5>
 					    <p class="card-text"><strong>Default Branch: </strong>__defaultbranch__</p>
-						  <p class="card-text"><strong>Last Commit: </strong>__lastcommit__</p>
+							<p class="card-text">Select branch:
+								<select id="__selectid__" class="selbranches" branchurl="__branchurl__"></select>
+						  <p id="__node_id__" class="card-text commit"><strong>Last Commit: </strong>__lastcommit__</p>
 					    <a href="__htmlurl__" class="btn btn-primary">View</a>
 					  </div>
 					</div>
@@ -180,13 +222,15 @@
 				</div>
 
 				<br/>
+				<a name="blogs">
 				<header class="major">
-					<h2>Blog</h2>
+					<h2>Blogs</h2>
 				</header>
 
 				<div id="blogarea" class="container-fluid">
 				</div>
 
+				<a name="addblog">
 				<header class="major">
 					<h2>Add a New Blog Entry</h2>
 				</header>
