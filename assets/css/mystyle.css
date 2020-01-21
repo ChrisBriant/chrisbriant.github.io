@@ -13,3 +13,11 @@
   padding: 20px;
   text-align: left;
 }
+
+#floatingbutton
+{
+    position: fixed;
+    top: 30%;
+    left:10%;
+    z-index: 1;
+}

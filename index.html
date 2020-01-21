@@ -121,7 +121,8 @@
 							success: function(data) {
 								console.log("Deleted Blog");
 								console.log(data);
-								location.reload();
+								//location.reload();
+								location.href = "./#blogs"
 							}
 						});
 
@@ -151,7 +152,8 @@
 							console.log("blog data");
 							console.log(data);
 							alert("Your blog entry has been added successfully");
-							location.reload();
+							//location.reload();
+							location.href = "./#blogs"
 						}
 					});
 				});
@@ -160,16 +162,21 @@
 	<body>
 
 		<!-- Banner -->
+			<a name="top">
 			<section id="banner" style="padding-bottom:10px;padding-top:20px">
 				<div>
 					<h2><strong>Chris Briant</strong></h2>
 				</div>
 			</section>
 
+			<div id="floatingbutton">
+				<a href="#top" class="btn btn-primary">Up</a>
+			</div>
+
 		<!-- One -->
 			<section id="one" class="wrapper special" style="padding-top:20px">
 				<div class="inner">
-					<a href="#github">GitHub Repos</a> | <a href="#blogs">Blogs</a> | <a href="#addblog">Add Blog</a>
+					<a href="#github">GitHub Repos</a> | <a href="#projects">Other Projects</a> | <a href="#blogs">Blogs</a> | <a href="#addblog">Add Blog</a>
 					<header class="major">
 						<h2>About Me</h2>
 					</header>
@@ -194,7 +201,7 @@
 								<li>Operating Systems: Windows 10, Linux, Server 2019</li>
 								<li>Cisco: Switching and Routing</li>
 								<li>Microsoft Azure</li>
-								<li>Systems Centre Congiguration Manager (SCCM)</li>
+								<li>Systems Centre Configuration Manager (SCCM)</li>
 								<li>Micrsoft Intune</li>
 								<li>Dell Hardware: Server and Laptops, hardware maintenance</li>
 							</ul>
@@ -214,11 +221,36 @@
 							<p class="card-text">Select branch:
 								<select id="__selectid__" class="selbranches" branchurl="__branchurl__"></select>
 						  <p id="__node_id__" class="card-text commit"><strong>Last Commit: </strong>__lastcommit__</p>
-					    <a href="__htmlurl__" class="btn btn-primary">View</a>
+					    <a href="__htmlurl__" class="btn btn-primary" target="#blank" >View</a>
 					  </div>
 					</div>
 				</div>
 				<div id="cardarea" class="row">
+				</div>
+
+				<a name="projects">
+				<header class="major">
+					<div>
+						<h2>Projects</h2>
+					</div>
+				</header>
+				<p>These are projects which I have created that are not on Git Hub, but hosted independantly.</p>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Smart Cat Tests</h5>
+						<p class="card-text">This is an app I created using a react front end which makes calls to an Api I developed
+						 using the Django Rest Framework.</p>
+						<a href="https://www.smartcattests.com" target="#blank" class="btn btn-primary">View</a>
+					</div>
+				</div>
+				<br/>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Traveljaunt</h5>
+						<p class="card-text">This is a website I created for people to post travel blogs and find advice on different
+						 travel destinations. It is created using the Django framework.</p>
+						<a href="https://www.smartcattests.com" target="#blank" class="btn btn-primary">View</a>
+					</div>
 				</div>
 
 				<br/>
