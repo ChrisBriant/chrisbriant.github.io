@@ -14,10 +14,19 @@
   text-align: left;
 }
 
-#floatingbutton
+.floatingmenu
 {
     position: fixed;
-    top: 30%;
-    left:10%;
+    background-color: #00cdcf;
+    top: 0%;
+    left:0%;
+    right:0%;
     z-index: 1;
+}
+
+.floatingmenu>div {
+  position:relative;
+  right: 40%;
+  left:40%;
+  background-color: #00cdcf;
 }
