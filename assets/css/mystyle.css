@@ -26,7 +26,7 @@
 
 .floatingmenu>div {
   position:relative;
-  right: 40%;
-  left:40%;
+  right: 20%;
+  left:20%;
   background-color: #00cdcf;
 }
