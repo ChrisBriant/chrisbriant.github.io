@@ -1,286 +1,152 @@
-<!DOCTYPE HTML>
-<!--
-	Typify by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
-	<head>
-		<title>Chris Briant</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/mystyle.css" />
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	  <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
-	  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<script>
-	  $(document).ready(function() {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="./img/santorini.ico" type="image/x-icon">
+	<link rel="icon" href="./img/santorini.ico" type="image/x-icon">
+    <title>Chris Briant - Git Hub Pages</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="#section-intro">About</a></li>
+                    <li><a href="#repositories">Repositories</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="hero">
+            <div class="hero-title">
+                <h1>Chris Briant</h1>
+                <h2>Git Hub Pages</h2>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="section-intro">
+            <h1>About Me</h1>
+            <div class="picture-text-left">
+                <div class="img-container avatar">
+                    <!--Inject Picture -->
+                </div>
+                <div id="about-paragraph">
+                    <h3>I love to write code!</h3>
+                    <p>I create websites and mobile apps, specialising in the Django Framework, React and Flutter.</p>
+                </div>
+            </div>
+            <div class="content-container">
+                <h3>Skills</h3>
+                <p>Here is a list of my skills</p>
+                <div class="list-two-halves">
+                    <div class="first-half">
+                        <ul>
+                            <li>Django Framwork</li>
+                            <li>Python Programming</li>
+                            <li>Flask Framwork</li>
+                            <li>JavaScript</li>
+                            <li>JQuery</li>
+                            <li>React Framework</li>
+                            <li>Svelte</li>
+                        </ul>
+                    </div>
+                    <div class="second-half">
+                        <ul>
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>Databases: SQL Server, Postgress, MySQL, MongoDB</li>
+                            <li>Operating Systems: Windows 10, Linux, Server 2019</li>
+                            <li>Cloud Computing: Azure, AWS, Linode, Heroku,</li>
+                            <li>Devops</li>
+                        </ul>
+                    </div>
+                </div>
 
-			function formatDate(datestr) {
-			  var date = new Date(datestr);
+            </div>
+        </section>
 
-			  return date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
-			}
+        <section id="repositories">
+            <h1>Repositories</h1>
+            <div class="card-container">
+                <!-- inject cards-->
+            </div>
+        </section>
 
-			$.ajax({
-				type: "get",
-				url: "https://api.github.com/users/ChrisBriant/repos",
-				success: function(data) {
-					var cardareahtml = "";
+        <section id="contact">
+            <h1>Contact</h1>
+            <div class="content-container">
+                <p>Send me a message:</p>
+                <!-- <form action="http://localhost:8000/calendar/sendemail/" autocomplete="on" method="post" enctype="multipart/form-data"> -->
+                <form action="mailto:info@cbriant@btinternet.com?" method="get" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="from">From:</label>
+                        <input id="from" type="text" name="from" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input id="subject" type="text" name="subject" required>
+                    </div>
+                    <label for="message">Message:</label>
+                    <textarea id="body" name="body" cols="30" rows="10"></textarea>
+                    <input type="submit" value="Send" class="btn"/>
+                </form>
+            </div>
+        </section>
+    </main>
 
-					for(var i=0;i < data.length;i++) {
-						if(i % 3 == 0) {
-							cardareahtml += "<div class='row test'>";
-						}
+    <script>
+        //Call git hub api for photo
+        fetch(`https://api.github.com/users/ChrisBriant`, {
+            method: 'GET',
+        }).then(response => response.json())
+        .then( async data => {
+            if(data) {
+                const avatar = document.querySelector('.avatar');
+                avatar.innerHTML = `
+                    <img src="${data.avatar_url}" alt="Chris Briant" />
+                `
+            }
+        }).catch(err => console.log('ERROR',err));
 
-						var updated_at = new Date(data[i].updated_at)
+        //Get the repositories
+        fetch(`https://api.github.com/users/ChrisBriant/repos`, {
+            method: 'GET',
+        }).then(response => response.json())
+        .then( async data => {
+            if(data) {
+                const repos = document.querySelector('#repositories .card-container');
+                data.forEach(element => {
+                    const created = new Date(element.created_at);
+                    const createdFormat = `${String(created.getDay()+1).padStart(2,'0')}/${String(created.getMonth()+1).padStart(2,'0')}/${created.getFullYear()}`;
+                    const updated = new Date(element.updated_at);
+                    const updatedFormat = `${String(updated.getDay()+1).padStart(2,'0')}/${String(updated.getMonth()+1).padStart(2,'0')}/${updated.getFullYear()}`;
+                    repos.innerHTML += `
+                    <div class="card">
+                        <div class="card-title">
+                            ${element.name}
+                        </div>
+                        <div class="card-body">
+                            <p id="description">${element.description}</p>
+                            <p><strong>Language: </strong>${element.language}</p>
+                            <p><strong>Date Created: </strong>${createdFormat}</p>
+                            <p><strong>Last Updated: </strong>${updatedFormat}</p>
+                            <a href="${element.svn_url}">View</a>
+                        </div>
+                    </div>
+                `
+                });
 
-						cardareahtml += $('#cardtemplate').html().replace(/__title__/g, data[i].name)
-						.replace(/__defaultbranch__/g, data[i].default_branch)
-						.replace(/__lastcommit__/g, updated_at)
-						.replace(/__htmlurl__/g, data[i].html_url)
-						.replace(/__selectid__/g, data[i].id)
-						.replace(/__branchurl__/g, data[i].branches_url.replace("{/branch}",""));
+            }
+        }).catch(err => console.log('ERROR',err));
+    </script>
 
-						if(i % 3 == 2 || i == (data.length - 1)) {
-							cardareahtml += "</div>";
-						}
-					}
-					$('#cardarea').append(cardareahtml);
-					$('.selbranches').on('change',function() {
-						var select = $(this);
-
-						$.ajax({
-							type: "get",
-							url: $(this).val(),
-							success: function(data) {
-								//Loop backwards to get branches
-								//Get the element which is the paragraph underneath the select
-								select.parent().next().html("<strong>Last Commit: </strong>" + new Date(data.commit.author.date));
-								//select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
-							}
-						});
-					});
-					$('.selbranches').each(function() {
-						if($(this).attr("branchurl") !== "__branchurl__") {
-							var select = $(this);
-							$.ajax({
-								type: "get",
-								url: $(this).attr("branchurl"),
-								success: function(data) {
-									//Loop backwards to get branches
-									for(var i=data.length - 1;i > -1; i--) {
-										select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
-									}
-								}
-							});
-						}
-					});
-
-				}
-			});
-
-			$('#sendmessage').submit(function(event) {
-				event.preventDefault();
-				var s = $('#subject').val();
-				var m = $('#msgtext').val();
-				var r = $('#reply').val();
-				$.ajax({
-					type: "post",
-					dataType: "json",
-					url: "https://cb-email-relay.herokuapp.com/contactme",
-					data: {'subject':s, 'msgtext':m, 'reply':r  },
-					success: function(data) {
-						$('.contact_data').val("");
-						alert("Thanks for contacting me, your message has been sent.");
-					}
-				});
-			});
-
-			$('#requestcv').submit(function(event) {
-				event.preventDefault();
-				var n = $('#name').val();
-				var c = $('#company').val();
-				var t = $('#contact').val();
-				var e = $('#contactemail').val();
-				var r = $('#reason').val();
-				$.ajax({
-					type: "post",
-					dataType: "json",
-					url: "https://cb-email-relay.herokuapp.com/requestcv",
-					data: {'name':n, 'company':c, 'contact':t, 'email':e,'reason':r },
-					success: function(data) {
-						$('.cv_data').val("");
-						alert("Thank you, I will review your request and send you my CV if appropriate.");
-					}
-				});
-			});
-
-		});
-	</script>
-	<body>
-
-		<!-- Banner -->
-			<a name="top">
-
-				<div class="row floatingmenu">
-					<div class="col-md-2"><a href="#github">GitHub Repos</a></div>
-					<div class="col-md-2"><a href="#projects">Other Projects</a></div>
-					<div class="col-md-2"><a href="#contactarea">Contact</a></div>
-					<div class="col-md-2"><a href="#requestcv">Request CV</a></div>
-				</div>
-				<br/>
-
-			<section id="banner" style="padding-bottom:10px;padding-top:25px">
-				<div>
-					<h2><strong>Chris Briant</strong></h2>
-				</div>
-			</section>
-
-			<!--
-			<div id="floatingbutton">
-				<a href="#top" class="btn btn-primary">Up</a>
-			</div>-->
-
-		<!-- One -->
-			<section id="one" class="wrapper special" style="padding-top:20px">
-				<div class="inner">
-					<header class="major">
-						<h2>About Me</h2>
-					</header>
-
-					<div class="row">
-						<div class="col">
-							<p>Currently I develop web apps as a hobby in my spare time. I am better
-								at back end programming and design, but I want to improve my skills at both
-								 back end and front end.</p>
-							<p>For my job, I work in IT as a security and infrastructure technician.</p>
-							<p>The technologies I have experience with include: </p>
-							<ul class="unbulleted">
-								<li>Django Framwork</li>
-								<li>Python Programming</li>
-								<li>Flask Framwork</li>
-								<li>JavaScript</li>
-								<li>JQuery</li>
-								<li>React Framework</li>
-								<li>HTML</li>
-								<li>CSS</li>
-								<li>Databases: SQL Server, Postgress, MySQL, MongoDB</li>
-								<li>Operating Systems: Windows 10, Linux, Server 2019</li>
-								<li>Cisco: Switching and Routing</li>
-								<li>Microsoft Azure</li>
-								<li>Systems Centre Configuration Manager (SCCM)</li>
-								<li>Micrsoft Intune</li>
-								<li>Dell Hardware: Server and Laptops, hardware maintenance</li>
-							</ul>
-					</div>
-				</div>
-				<a name="github">
-				<header class="major">
-					<div>
-						<h2>My GitHub Repositories</h2>
-					</div>
-				</header>
-				<div id="cardtemplate" style="display:none;">
-					<div class="card" style="width: 18rem;margin-bottom:10px;">
-					  <div class="card-body">
-					    <h5 class="card-title">__title__</h5>
-					    <p class="card-text"><strong>Default Branch: </strong>__defaultbranch__</p>
-							<p class="card-text">Select branch:
-								<select id="__selectid__" class="selbranches" branchurl="__branchurl__"></select>
-						  <p id="__node_id__" class="card-text commit"><strong>Last Commit: </strong>__lastcommit__</p>
-					    <a href="__htmlurl__" class="btn btn-primary" target="#blank" >View</a>
-					  </div>
-					</div>
-				</div>
-				<div id="cardarea" class="row">
-				</div>
-
-				<a name="projects">
-				<header class="major">
-					<div>
-						<h2>Projects</h2>
-					</div>
-				</header>
-				<p>These are projects which I have created that are not on Git Hub, but hosted independantly.</p>
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Smart Cat Tests</h5>
-						<p class="card-text">This is an app I created using a react front end which makes calls to an Api I developed
-						 using the Django Rest Framework.</p>
-						<a href="https://www.smartcattests.com" target="#blank" class="btn btn-primary">View</a>
-					</div>
-				</div>
-				<br/>
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">Traveljaunt</h5>
-						<p class="card-text">This is a website I created for people to post travel blogs and find advice on different
-						 travel destinations. It is created using the Django framework.</p>
-						<a href="https://www.traveljaunt.org/" target="#blank" class="btn btn-primary">View</a>
-					</div>
-				</div>
-
-				<br/>
-
-				<a name="contactarea">
-				<header class="major">
-					<h2>Contact</h2>
-				</header>
-
-				<p>Send a message to Chris Briant</p>
-				<form method="post" action="" id="sendmessage">
-					<label>Subject:</label>
-					<input id="subject" type="text" class="contact_data" required></input>
-					<label>Reply Address:</label>
-					<input id="reply" type="email" class="contact_data" required></input>
-					<label>Message:</label>
-					<textarea id="msgtext" class="contact_data" required></textarea>
-					<br/>
-					<input type="submit" class="btn btn-primary" value="Send" />
-				</form>
-
-				<a name="requestcv">
-				<header class="major">
-					<h2>Request CV</h2>
-				</header>
-
-				<p>Please complete the form below to request a copy of my CV</p>
-				<form method="post" action="" id="requestcv">
-					<label>Name:</label>
-					<input id="name" type="text" class="cv_data" required></input>
-					<label>Company:</label>
-					<input id="company" type="text" class="cv_data" required></input>
-					<label>Contact no.:</label>
-					<input id="contact" type="text" class="cv_data" required></input>
-					<label>Contact Email:</label>
-					<input id="contactemail" type="email" class="cv_data" required></input>
-					<label>Please state the reason for requesting my CV:</label>
-					<textarea id="reason" class="cv_data" required></textarea>
-					<br/>
-					<input type="submit" class="btn btn-primary" value="Request" />
-				</form>
-
-
-
-			</section>
-
-			<footer id="footer">
-				<div class="copyright">
-					&copy; Template by: <a href="http://templated.co/">TEMPLATED</a>.
-				</div>
-			</footer>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    <footer>
+        Chris Briant - Git Hub Pages <script>document.write(new Date().getFullYear());</script>
+    </footer>
+</body>
 </html>
+    

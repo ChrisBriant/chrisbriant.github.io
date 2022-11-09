@@ -30,7 +30,6 @@
 				type: "get",
 				url: "https://api.github.com/users/ChrisBriant/repos",
 				success: function(data) {
-					console.log(data);
 					var cardareahtml = "";
 
 					for(var i=0;i < data.length;i++) {
@@ -60,7 +59,6 @@
 							url: $(this).val(),
 							success: function(data) {
 								//Loop backwards to get branches
-								console.log(data);
 								//Get the element which is the paragraph underneath the select
 								select.parent().next().html("<strong>Last Commit: </strong>" + new Date(data.commit.author.date));
 								//select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
@@ -76,7 +74,6 @@
 								success: function(data) {
 									//Loop backwards to get branches
 									for(var i=data.length - 1;i > -1; i--) {
-										console.log(data);
 										select.append("<option value='" + data[i].commit.url + "'>" + data[i].name + "</option>");
 									}
 								}
@@ -84,79 +81,45 @@
 						}
 					});
 
-
 				}
 			});
 
-
-
-
-			$.ajax({
-				type: "get",
-				url: "https://aqueous-meadow-55873.herokuapp.com/",
-				success: function(data) {
-					//update_messages(data.messages);
-					console.log("blog data");
-					console.log(data);
-
-					var innerhtml = "";
-
-					for(var i=0;i < data.length;i++) {
-						innerhtml += "<div class='card'>";
-						innerhtml += "<div class='card-body'>";
-						innerhtml += 	"<h5 class='card-title'><strong>" + data[i].title + "</strong></h5>";
-						innerhtml += 	"<h5 class='card-title'>by " + data[i].author + " on " + formatDate(data[i].date) + "</h5>";
-						innerhtml +=  "<p class='card-text'><strong>"+  data[i].body + "</strong></p>";
-						innerhtml += "<button id='" + data[i]._id +"' class='btn btn-primary blogbtn'>Delete</button>"
-						innerhtml += "</div></div><br/>";
+			$('#sendmessage').submit(function(event) {
+				event.preventDefault();
+				var s = $('#subject').val();
+				var m = $('#msgtext').val();
+				var r = $('#reply').val();
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: "https://cb-email-relay.herokuapp.com/contactme",
+					data: {'subject':s, 'msgtext':m, 'reply':r  },
+					success: function(data) {
+						$('.contact_data').val("");
+						alert("Thanks for contacting me, your message has been sent.");
 					}
-
-					$('#blogarea').html(innerhtml);
-					$(".blogbtn").on('click',function(event) {
-						var deleteid = $(this).attr("id");
-
-						$.ajax({
-							type: "get",
-							url: "https://aqueous-meadow-55873.herokuapp.com/deleteblog/"+deleteid,
-							success: function(data) {
-								console.log("Deleted Blog");
-								console.log(data);
-								//location.reload();
-								location.href = "./#blogs"
-							}
-						});
-
-					});
-
-				}
-			});
-
-
-			$("#blogpost").on('submit',function(event){
-					event.preventDefault(); //prevent default action
-
-					var blogdata = {
-						title:$('#title').val(),
-						author:$('#author').val(),
-						body:$('#blogtext').val()
-					}
-
-					$.ajax({
-						type: "post",
-						url: "https://aqueous-meadow-55873.herokuapp.com/posts",
-						dataType: 'json',
-						contentType: 'application/json',
-						data: JSON.stringify(blogdata),
-						success: function(data) {
-							//update_messages(data.messages);
-							console.log("blog data");
-							console.log(data);
-							alert("Your blog entry has been added successfully");
-							//location.reload();
-							location.href = "./#blogs"
-						}
-					});
 				});
+			});
+
+			$('#requestcv').submit(function(event) {
+				event.preventDefault();
+				var n = $('#name').val();
+				var c = $('#company').val();
+				var t = $('#contact').val();
+				var e = $('#contactemail').val();
+				var r = $('#reason').val();
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: "https://cb-email-relay.herokuapp.com/requestcv",
+					data: {'name':n, 'company':c, 'contact':t, 'email':e,'reason':r },
+					success: function(data) {
+						$('.cv_data').val("");
+						alert("Thank you, I will review your request and send you my CV if appropriate.");
+					}
+				});
+			});
+
 		});
 	</script>
 	<body>
@@ -167,8 +130,8 @@
 				<div class="row floatingmenu">
 					<div class="col-md-2"><a href="#github">GitHub Repos</a></div>
 					<div class="col-md-2"><a href="#projects">Other Projects</a></div>
-					<div class="col-md-2"><a href="#blogs">Blogs</a></div>
-					<div class="col-md-2"><a href="#addblog">Add Blog</a></div>
+					<div class="col-md-2"><a href="#contactarea">Contact</a></div>
+					<div class="col-md-2"><a href="#requestcv">Request CV</a></div>
 				</div>
 				<br/>
 
@@ -195,7 +158,7 @@
 							<p>Currently I develop web apps as a hobby in my spare time. I am better
 								at back end programming and design, but I want to improve my skills at both
 								 back end and front end.</p>
-							<p>For my job, I work in IT Support as a security and infrastructure technician.</p>
+							<p>For my job, I work in IT as a security and infrastructure technician.</p>
 							<p>The technologies I have experience with include: </p>
 							<ul class="unbulleted">
 								<li>Django Framwork</li>
@@ -258,40 +221,57 @@
 						<h5 class="card-title">Traveljaunt</h5>
 						<p class="card-text">This is a website I created for people to post travel blogs and find advice on different
 						 travel destinations. It is created using the Django framework.</p>
-						<a href="https://www.smartcattests.com" target="#blank" class="btn btn-primary">View</a>
+						<a href="https://www.traveljaunt.org/" target="#blank" class="btn btn-primary">View</a>
 					</div>
 				</div>
 
 				<br/>
-				<a name="blogs">
+
+				<a name="contactarea">
 				<header class="major">
-					<h2>Blogs</h2>
+					<h2>Contact</h2>
 				</header>
 
-				<div id="blogarea" class="container-fluid">
-				</div>
-
-				<a name="addblog">
-				<header class="major">
-					<h2>Add a New Blog Entry</h2>
-				</header>
-
-				<form method="post" action="" id="blogpost">
-					<label>Title:</label>
-					<input id="title" type="text"></input>
-					<label>By (your name):</label>
-					<input id="author" type="text"></input>
-					<label>Text:</label>
-					<textarea id="blogtext"></textarea>
+				<p>Send a message to Chris Briant</p>
+				<form method="post" action="" id="sendmessage">
+					<label>Subject:</label>
+					<input id="subject" type="text" class="contact_data" required></input>
+					<label>Reply Address:</label>
+					<input id="reply" type="email" class="contact_data" required></input>
+					<label>Message:</label>
+					<textarea id="msgtext" class="contact_data" required></textarea>
 					<br/>
-					<input type="submit" class="btn btn-primary" value="Add" />
+					<input type="submit" class="btn btn-primary" value="Send" />
 				</form>
+
+				<a name="requestcv">
+				<header class="major">
+					<h2>Request CV</h2>
+				</header>
+
+				<p>Please complete the form below to request a copy of my CV</p>
+				<form method="post" action="" id="requestcv">
+					<label>Name:</label>
+					<input id="name" type="text" class="cv_data" required></input>
+					<label>Company:</label>
+					<input id="company" type="text" class="cv_data" required></input>
+					<label>Contact no.:</label>
+					<input id="contact" type="text" class="cv_data" required></input>
+					<label>Contact Email:</label>
+					<input id="contactemail" type="email" class="cv_data" required></input>
+					<label>Please state the reason for requesting my CV:</label>
+					<textarea id="reason" class="cv_data" required></textarea>
+					<br/>
+					<input type="submit" class="btn btn-primary" value="Request" />
+				</form>
+
+
 
 			</section>
 
 			<footer id="footer">
 				<div class="copyright">
-					&copy; Untitled. Design: <a href="http://templated.co/">TEMPLATED</a>.
+					&copy; Template by: <a href="http://templated.co/">TEMPLATED</a>.
 				</div>
 			</footer>
 
