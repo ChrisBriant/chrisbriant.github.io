@@ -260,6 +260,7 @@ section h1 {
 
 .btn:hover {
     background: var(--secondary-color);
+    transition: background .5s;
 }
 
 /* ABOUT */
